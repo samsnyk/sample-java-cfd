@@ -7,3 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageRepo extends JpaRepository<ImageJpa, Integer> {
 }
+
+// Comment for commit
