@@ -19,8 +19,13 @@ executors:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: cfd
 
+environment:
+
+
 jobs:
   build:
+    context: 
+      - Snyk
     docker:
       - image: cimg/openjdk:11.0
     steps:
