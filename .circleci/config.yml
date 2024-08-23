@@ -24,8 +24,6 @@ environment:
 
 jobs:
   build:
-    context: 
-      - Snyk
     docker:
       - image: cimg/openjdk:11.0
     steps:
@@ -43,7 +41,9 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
-      - build
+      - build:
+          context:
+            - Snyk
       - maven/test:
           executor: openjdk11
           pre-steps:
