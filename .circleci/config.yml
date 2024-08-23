@@ -18,6 +18,7 @@ executors:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: cfd
+
 jobs:
   build:
     docker:
