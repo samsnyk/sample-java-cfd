@@ -6,6 +6,7 @@ orbs:
   # so you dont have to copy and paste it everywhere.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/maven
   maven: circleci/maven@1.3
+  snyk: snyk/snyk@2.2.0
 
 executors:
   openjdk11:
@@ -22,6 +23,18 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
+      - build:
+          docker:
+            - image: cimg/openjdk:11.0
+          steps:
+            - checkout
+            - snyk/install
+            - run:
+                command: snyk version
+                name: Which version of snyk is installed
+            - run:
+                command: snyk code test
+                name: Run code scan
       - maven/test:
           executor: openjdk11
           pre-steps:
