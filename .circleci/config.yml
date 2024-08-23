@@ -18,24 +18,26 @@ executors:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: cfd
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - snyk/install
+      - run:
+          command: snyk version
+          name: Which version of snyk is installed
+      - run:
+          command: snyk code test
+          name: Run code scan
 
 workflows:
   verify: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
-      - build:
-          docker:
-            - image: cimg/openjdk:11.0
-          steps:
-            - checkout
-            - snyk/install
-            - run:
-                command: snyk version
-                name: Which version of snyk is installed
-            - run:
-                command: snyk code test
-                name: Run code scan
+      - build
       - maven/test:
           executor: openjdk11
           pre-steps:
